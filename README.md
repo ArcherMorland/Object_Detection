@@ -13,4 +13,4 @@ It will integrate other object detection codes in the future.
 ### SSD
 * This code is forked from sgrvinod on github, and it has been modified to fit personal needs. 
 * Before training stage, run create_data_lists.py to create json files.
-* For more detail, please refer to README.md of ssd/5.1.0 
+* For more detail, please refer to README.md of ssd/2.2 
