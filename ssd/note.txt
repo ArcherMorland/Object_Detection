@@ -1,3 +1,0 @@
-v2.2:
-SSD: Single Shot MultiBox Detector | a PyTorch Tutorial to Object Detection
-https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Object-Detection/tree/9cad25bc32a61e83a1644ec9b1f98e242923f892
