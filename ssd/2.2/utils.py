@@ -8,21 +8,51 @@ import torchvision.transforms.functional as FT
 from PIL import Image,ImageDraw
 Image.MAX_IMAGE_PIXELS = None
 
+
+
+def read_data_cfg(datacfg):
+    options = dict()
+    options['gpus'] = '0,1,2,3'
+    options['num_workers'] = '10'
+    with open(datacfg, 'r') as fp:
+        lines = fp.readlines()
+
+    for line in lines:
+        line = line.strip()
+        if line == '':
+            continue
+        key,value = line.split('=')
+        key = key.strip()
+        value = value.strip()
+        if key in ["train","valid"]:
+            value=[v for v in value.split(';') if v!='']
+        options[key] = value
+    return options
+
+def get_classes(name_path):
+    with open(name_path, 'r') as f:
+        lines=[ln.strip() for ln in f.readlines()]
+
+    return tuple(lines)
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+cfg=read_data_cfg(os.path.join('..', '..', 'Training.config'))
 
 # Label map
 #voc_labels = ('aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor')
-voc_labels = ('Conn_USB_A_Top', 'Conn_USB_A_Bottom', 'Conn_USB_A_Side', 'Conn_USB_A_Pattern', 'Conn_USB_A_Entry' )
+voc_labels =get_classes( cfg['names'])
+
 label_map = {k: v + 1 for v, k in enumerate(voc_labels)}
 label_map['background'] = 0
 rev_label_map = {v: k for k, v in label_map.items()}  # Inverse mapping
 
 # Color map for bounding boxes of detected objects from https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
-#distinct_colors = ['#e6194b', '#3cb44b', '#ffe119', '#0082c8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#d2f53c', '#fabebe', '#008080', '#000080', '#aa6e28', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#e6beff', '#808080', '#FFFFFF']
-distinct_colors = ['#e6194b', '#3cb44b', '#ffe119', '#0082c8', '#f58231','#FFFFFF']
-label_color_map = {k: distinct_colors[i] for i, k in enumerate(label_map.keys())}
+distinct_colors = ['#e6194b', '#3cb44b', '#ffe119', '#0082c8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#d2f53c', '#fabebe', '#008080', '#000080', '#aa6e28', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#e6beff', '#808080', '#FFFFFF']
+label_color_map = {k: distinct_colors[:len(label_map.keys())][i] for i, k in enumerate(label_map.keys())}
 
-dataset_folder=os.path.join('..', '..', 'dataset', 'USBA', 'Image')
+dataset_folder=cfg["image_folder"]
 
 def parse_annotation(annotation_path):
     tree = ET.parse(annotation_path)
@@ -114,6 +144,7 @@ def create_data_lists(train_path, valid_path, output_folder):
 
             for img_info in lines:
                 img_path=os.path.join(dataset_folder, img_info[0])
+                print('cp img path',img_path)
                 # Parse annotation's XML file
                 objects = parse_annotation2(img_info[1:])
                 #print(f"{id}",objects)#{'boxes': [[145, 133, 339, 328], [0, 0, 374, 446]], 'labels': [12, 15], 'difficulties': [0, 0]}
@@ -790,25 +821,6 @@ def clip_gradient(optimizer, grad_clip):
 
 
 #===============================================================================
-
-def read_data_cfg(datacfg):
-    options = dict()
-    options['gpus'] = '0,1,2,3'
-    options['num_workers'] = '10'
-    with open(datacfg, 'r') as fp:
-        lines = fp.readlines()
-
-    for line in lines:
-        line = line.strip()
-        if line == '':
-            continue
-        key,value = line.split('=')
-        key = key.strip()
-        value = value.strip()
-        if key in ["train","valid"]:
-            value=[v for v in value.split(';') if v!='']
-        options[key] = value
-    return options
 
 
 

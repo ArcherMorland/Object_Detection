@@ -99,9 +99,11 @@ class VGGBase(nn.Module):
         param_names = list(state_dict.keys())
 
         # Pretrained VGG base
-        pretrained_state_dict = torchvision.models.vgg16(pretrained=True).state_dict()
+        # Change directory of saving pretrained weight
+        os.environ['TORCH_HOME'] = '.'#https://stackoverflow.com/questions/52628270/is-there-any-way-i-can-download-the-pre-trained-models-available-in-pytorch-to-a
+        pretrained_state_dict = torchvision.models.vgg16(pretrained=True).state_dict()     
         pretrained_param_names = list(pretrained_state_dict.keys())
-
+        
         # Transfer conv. parameters from pretrained model to current model
         for i, param in enumerate(param_names[:-4]):  # excluding conv6 and conv7 parameters
             state_dict[param] = pretrained_state_dict[pretrained_param_names[i]]

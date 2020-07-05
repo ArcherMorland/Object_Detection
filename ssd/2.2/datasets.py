@@ -35,6 +35,7 @@ class PascalVOCDataset(Dataset):
         # Read data files
         with open(os.path.join(data_folder, self.split + '_images.json'), 'r') as j:
             self.images = json.load(j)
+            #print(self.images[:10])
         with open(os.path.join(data_folder, self.split + '_objects.json'), 'r') as j:
             self.objects = json.load(j)
 
@@ -42,6 +43,7 @@ class PascalVOCDataset(Dataset):
 
     def __getitem__(self, i):
         # Read image
+        
         image = Image.open(self.images[i], mode='r')
         image = image.convert('RGB')        
         # Read objects in this image (bounding boxes, labels, difficulties)
