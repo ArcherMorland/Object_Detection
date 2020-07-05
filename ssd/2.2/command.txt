@@ -1,0 +1,16 @@
+cd /d D:\Integration\Object_Detection\SSD\v1.2
+
+
+python create_data_lists.py
+
+
+
+python -W ignore train.py
+
+
+python -W ignore eval.py
+
+
+python -W ignore detect.py
+
+
