@@ -1,38 +1,19 @@
-# pytorch-0.4-yolov3 : Yet Another Implimentation of Pytroch 0.41 or over and YoloV3
-## This repository is created for implmentation of yolov3 with pytorch 0.4 from marvis/pytorch-yolo2. 
-This repository is forked from great work pytorch-yolo2 of @github/marvis, 
-but I couldn't upload or modify directly to marvis source files because many files were changed even filenames.
 
-### Difference between this repository and marvis original version.
-* some programs are re-structured for windows environments. 
-(for example \_\_name\_\_ == '\_\_main\_\_' (variable in python program) is checked for multiple threads).
-* load and save weights are modified to compatible to yolov2 and yolov3 versions 
-(means that this repository works for yolov2 and yolov3 configuration without source modification.)
-* fully support yolov3 detection and training
-   * region_loss.py is renamed to region_layer.py.
-   * outputs of region_layer.py and yolo_layer.py are enclosed to dictionary variables.     
-* codes are modified to work on pytorch 0.4 and python3
-* some codes are modified to speed up and easy readings. (I'm not sure.. T_T)
-* in training mode, check nan value and use gradient clipping.
+# This repository is created for implmentation of yolov3 with pytorch 0.4
+This code is forked from andy-yun's pytorch-0.4-yolov3 on github, and it has been modified to fit personal needs.
+To make it more user-friendly, the hyperparameters of code are set in Training.config under Object_Detection rather than command string.
 
-#### If you want to know the training and detect procedures, please refer to https://github.com/marvis/pytorch-yolo2 for the detail information.
 
-### Train your own data or coco, voc data as follows:
+### After configure Training.config, Train your own data as follows:
 ```
-python train.py -d cfg/coco.data -c cfg/yolo_v3.cfg -w yolov3.weights
+python -W ignore train.py
 ```
 
-* new weights are saved in backup directory along to epoch numbers (last 5 weights are saved, you control the number of backups in train.py)
+* last 10 weights are saved in weights directory 
 
-* The above command shows the example of training process. I didn't execute the above command. But, I did successully train my own data with the pretrained yolov3.weights. 
+* If you want to  train weights from pretrained yolov3.weights, go to cfg/setting.config and set training_process_init=True and check dataset is properly placed then you're good to go .
 
-* You __should__ notice that the anchor information is different when it used in yolov2 or yolov3 model.
-
-* If you want to use the pretrained weight as the initial weights, add -r option in the training command
-
-```
-python train.py -d cfg/my.data -c cfg/my.cfg -w yolov3.weights -r
-```
+* Basically, setwdata=False is enough for most users. 
 
 * maximum epochs option, which is automatically calculated, somestimes is too small, then you can set the max_epochs in your configuration.
 
