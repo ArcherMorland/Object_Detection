@@ -12,41 +12,19 @@ python -W ignore train.py
 * last 10 weights are saved in weights directory 
 
 * If you want to  train weights from pretrained yolov3.weights, go to cfg/setting.config and set training_process_init=True and check dataset is properly placed then you're good to go .
+   Use the following link to download pretrained yolov3.weight:
+   ```
+   https://pjreddie.com/media/files/yolov3.weights
+   ```
 
 * Basically, setwdata=False is enough for most users. 
 
 * maximum epochs option, which is automatically calculated, somestimes is too small, then you can set the max_epochs in your configuration.
 
-#### Recorded yolov2 and yolov3 training for my own data
-* When you clicked the images, videos will played on yoube.com
 
-* yolov2 training recorded :   
-[![yolov2 training](https://img.youtube.com/vi/jhoaVeqtOQw/0.jpg)](https://www.youtube.com/watch?v=jhoaVeqtOQw)  
-
-* yolov3 training recorded :  
-[![yolov3 training](https://img.youtube.com/vi/zazKAm9FClc/0.jpg)](https://www.youtube.com/watch?v=zazKAm9FClc)  
-
-* In above recorded videos, if you use the pretrained weights as base, about less than 10 or 20 epochs, you can see the large number of proposals. However, when training is in progress, nPP decreases to zero and increases with model updates.
-
-* The converges of yolov2 and yolov3 are different because yolov2 updates all boxes below 12800 exposures.
 
 ### Detect the objects in dog image using pretrained weights
 
-#### yolov2 models
-```
-wget http://pjreddie.com/media/files/yolo.weights
-python detect.py cfg/yolo.cfg yolo.weights data/dog.jpg data/coco.names 
-```
-
-![predictions](data/predictions-yolov2.jpg)
-
-Loading weights from yolo.weights... Done!  
-data\dog.jpg: Predicted in 0.832918 seconds.  
-3 box(es) is(are) found  
-truck: 0.934710  
-bicycle: 0.998012  
-dog: 0.990524  
-save plot results to predictions.jpg  
 
 #### yolov3 models
 ```
