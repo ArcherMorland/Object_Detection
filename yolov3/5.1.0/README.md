@@ -13,9 +13,9 @@ python -W ignore train.py
 
 * If you want to  train weights from pretrained yolov3.weights, go to cfg/setting.config and set training_process_init=True and check dataset is properly placed then you're good to go .
    Use the following link to download pretrained yolov3.weight:
-   ```
-   https://pjreddie.com/media/files/yolov3.weights
-   ```
+```
+https://pjreddie.com/media/files/yolov3.weights
+```
 
 * Basically, setwdata=False is enough for most users. 
 
@@ -28,8 +28,8 @@ python -W ignore train.py
 
 #### yolov3 models
 ```
-wget https://pjreddie.com/media/files/yolov3.weights
-python detect.py cfg/yolo_v3.cfg yolov3.weights data/dog.jpg data/coco.names  
+python detect.py cfg/model_structure.cfg weights/000001.weights dataset/somfolder ../../dataset/voc2012/classes.name
+
 ```
 
 ![predictions](data/predictions-yolov3.jpg)
