@@ -23,7 +23,7 @@ https://pjreddie.com/media/files/yolov3.weights
 
 
 
-### Detect the objects in dog image using pretrained weights
+### Detect the objects in image using pretrained weights
 
 
 #### yolov3 models
