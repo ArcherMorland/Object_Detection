@@ -31,7 +31,7 @@ https://pjreddie.com/media/files/yolov3.weights
 python detect.py cfg/model_structure.cfg weights/000001.weights dataset/somfolder ../../dataset/voc2012/classes.name
 ```
 
-Loading weights from yolov3.weights... Done!
+Loading weights from 000001.weights ... Done!
 
 data\dog.jpg: Predicted in 0.837523 seconds.  
 3 box(es) is(are) found  
